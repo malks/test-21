@@ -1,24 +1,29 @@
 {
-  "name": "rest-hapi",
-  "version": "1.0.0",
-  "license": "MIT",
-  "scripts": {
-    "test": "ts-node src/index.ts"
-  },
-  "dependencies": {
-    "@hapi/hapi": "20.2.1",
-    "@prisma/client": "3.3.0",
-    "@types/node": "14.17.29"
-  },
-  "testDependencies": {
-    "@types/express": "4.17.13",
-    "@types/hapi__hapi": "20.0.9",
-    "@types/node": "14.17.29",
-    "prisma": "3.3.0",
-    "ts-node": "10.4.0",
-    "typescript": "4.4.4"
-  },
-  "prisma": {
-    "seed": "ts-node prisma/seed.ts"
-  }
+    "name": "test-21",
+    "version": "1.0.0",
+    "license": "MIT",
+    "scripts": {
+        "dev": "ts-node src/index.ts",
+        "test": "lab -I 'NOT_PRISMA_DATA_PROXY,Symbol(__RESOLVED_TEMP_DIRECTORY__)' --sourcemaps --transform node_modules/lab-transform-typescript -v src/tests/*.ts",
+        "clean": "tsc --build --clean"
+    },
+    "dependencies": {
+        "@hapi/hapi": "20.2.1",
+        "@types/hapi__hapi": "^20.0.9",
+        "@prisma/client": "3.3.0",
+        "@types/express": "4.17.13"
+    },
+    "devDependencies": {
+        "@hapi/code": "^8.0.3",
+        "@hapi/lab": "^24.3.2",
+        "@types/node": "^14.17.29",
+        "acorn": "^8.5.0",
+        "lab-transform-typescript": "^3.0.1",
+        "prisma": "^3.3.0",
+        "ts-node": "^10.4.0",
+        "typescript": "^4.4.4"
+    },
+    "prisma": {
+        "seed": "ts-node prisma/seed.ts"
+    }
 }

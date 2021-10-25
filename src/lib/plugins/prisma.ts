@@ -1,5 +1,4 @@
 //Prisma for our Database Handler
-
 import { PrismaClient } from '@prisma/client'
 import Hapi from '@hapi/hapi'
 
