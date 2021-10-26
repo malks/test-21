@@ -15,6 +15,7 @@ enum FavouredStatus{
 enum AccountType{
     savings
     checking
+    easy
 }
 
 model Favoured {

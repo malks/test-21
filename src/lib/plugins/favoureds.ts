@@ -1,5 +1,7 @@
 import Hapi from '@hapi/hapi'
-import joi from 'joi'
+import joi from 'joi';
+import mutationValidator from './validators/mutation';
+import queryValidator from './validators/query';
 
 // plugin to instantiate Favoureds
 const favouredsPlugin = {
@@ -13,14 +15,12 @@ const favouredsPlugin = {
                 handler: listHandler,
                 options: {
                     validate: {
-                        query: joi.object({
-                            take: joi.number().integer(),
-                            skip: joi.number().integer(),
-                            orderDirection: joi.string().alphanum().min(3).max(4),
-                            searchString:   joi.string().alphanum(),
-                        })
-                    }
-                }
+                        query: queryValidator,   
+                    },
+                    response:{
+                        failAction: 'error'
+                    },    
+                },
             },
         ]),
         server.route([
@@ -30,41 +30,12 @@ const favouredsPlugin = {
                 handler: createHandler,
                 options: {
                     validate: {
-                        payload: joi.object({
-                            email:                  joi.string().email(),
-                            name:                   joi.string().min(3).pattern(/^[A-Za-z]+$/),
-                            cpf:                    joi.string().pattern(/^[0-9]{3}\.?[0-9]{3}\.?[0-9]{3}\-?[0-9]{2}$/),
-                            status:                 joi.string().pattern(/^(draft|valid)$/),
-                            account_bank:           joi.string().alphanum(),
-                            account_agency:         joi.string().max(4).required().pattern(/^(?:^0*)[1-9][0-9]{0,3}$/),
-                            account_agency_digit:   joi.alternatives().
-                                                        conditional( joi.ref('account_bank'), 
-                                                            { 
-                                                                is: '001', 
-                                                                then:       joi.string().pattern(/^[xX0-9]{0,1}$/),
-                                                                otherwise:  joi.string().pattern(/^[0-9]{0,1}$/),
-                                                            },
-                                                        ),
-                            account_type:           joi.string().pattern(/^(savings|checking)$/),
-                            account_number:         joi.alternatives().
-                                                        conditional( joi.ref('account_bank'), 
-                                                            { 
-                                                                is: '001', 
-                                                                then:       joi.string().max(8).required().pattern( /^(?:^0*)[1-9][0-9]{0,7}$/),
-                                                                otherwise:  joi.string().max(11).required().pattern( /^(?:^0*)[1-9][0-9]{0,10}$/),
-                                                            },
-                                                        ),
-                            account_number_digit:   joi.alternatives().
-                                                        conditional( joi.ref('account_bank'), 
-                                                            { 
-                                                                is: '001', 
-                                                                then:       joi.string().pattern(/^[xX0-9]{0,1}$/),
-                                                                otherwise:  joi.string().pattern(/^[0-9]{0,1}$/),
-                                                            },
-                                                        ),
-                        })
-                    }
-                }
+                        payload: mutationValidator,
+                    },
+                    response:{
+                        failAction: 'error'
+                    },
+                },
             },
         ]),
         server.route([
@@ -72,6 +43,15 @@ const favouredsPlugin = {
                 method: 'POST',
                 path: '/favoureds/update/{favouredId}',
                 handler: updateHandler,
+                options: {
+                    validate: {
+                        payload: mutationValidator,
+                        query: joi.object({ favouredId: joi.number().required() })
+                    },
+                    response:{
+                        failAction: 'error'
+                    },
+                }
             },
         ]),
         server.route([
@@ -79,6 +59,14 @@ const favouredsPlugin = {
                 method: 'POST',
                 path: '/favoureds/delete',
                 handler: deleteManyHandler,
+                options: {
+                    validate: {
+                        payload: joi.object({ favouredId: joi.string().required() })
+                    },
+                    response:{
+                        failAction: 'error'
+                    },
+                }
             },
         ])
     }
