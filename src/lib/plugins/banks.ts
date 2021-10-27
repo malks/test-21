@@ -29,6 +29,13 @@ async function listHandler(request: Hapi.Request, hapi: Hapi.ResponseToolkit) {
 
     const { searchString } = request.query
 
+    //Default response
+    let res={
+        status:'error',
+        message:'Oops, something went terribly wrong...',
+        data:{},
+    };
+
     //Build query from payload
     const search = searchString ? {
         OR: [
@@ -47,6 +54,7 @@ async function listHandler(request: Hapi.Request, hapi: Hapi.ResponseToolkit) {
         return hapi.response(banks).code(200)
 
     } catch (err) {
-        return hapi.response( { error: err } ).code(500);
+        console.log(err);
+        return hapi.response( res ).code(500);
     }
 }  

@@ -4,7 +4,7 @@
     "license": "MIT",
     "scripts": {
         "dev": "ts-node src/index.ts",
-        "test": "lab -I 'NOT_PRISMA_DATA_PROXY,Symbol(__RESOLVED_TEMP_DIRECTORY__)' --sourcemaps --transform node_modules/lab-transform-typescript -v src/tests/*.ts",
+        "test": "lab -I 'NOT_PRISMA_DATA_PROXY,Symbol(__RESOLVED_TEMP_DIRECTORY__)' --sourcemaps --transform node_modules/lab-transform-typescript -v src/tests/tests.ts",
         "clean": "tsc --build --clean"
     },
     "dependencies": {

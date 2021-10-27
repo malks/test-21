@@ -1,6 +1,6 @@
 import Hapi from '@hapi/hapi'
 import joi from 'joi';
-import mutationValidator from './validators/mutation';
+import { changeValidator, createValidator } from './validators/mutation';
 import queryValidator from './validators/query';
 
 // plugin to instantiate Favoureds
@@ -13,14 +13,6 @@ const favouredsPlugin = {
                 method: 'POST',
                 path: '/favoureds/list',
                 handler: listHandler,
-                options: {
-                    validate: {
-                        query: queryValidator,   
-                    },
-                    response:{
-                        failAction: 'error'
-                    },    
-                },
             },
         ]),
         server.route([
@@ -30,7 +22,7 @@ const favouredsPlugin = {
                 handler: createHandler,
                 options: {
                     validate: {
-                        payload: mutationValidator,
+                        payload: createValidator,
                     },
                     response:{
                         failAction: 'error'
@@ -45,11 +37,10 @@ const favouredsPlugin = {
                 handler: updateHandler,
                 options: {
                     validate: {
-                        payload: mutationValidator,
-                        query: joi.object({ favouredId: joi.number().required() })
+                        payload: changeValidator
                     },
                     response:{
-                        failAction: 'error'
+                        failAction: 'log'
                     },
                 }
             },
@@ -61,7 +52,7 @@ const favouredsPlugin = {
                 handler: deleteManyHandler,
                 options: {
                     validate: {
-                        payload: joi.object({ favouredId: joi.string().required() })
+                        payload: joi.object({ favouredIds: joi.string().required() })
                     },
                     response:{
                         failAction: 'error'
@@ -80,6 +71,13 @@ async function listHandler(request: Hapi.Request, hapi: Hapi.ResponseToolkit) {
 
     const { searchString, skip, take, orderDirection } = request.query
 
+    //Default response
+    let res={
+        status:'error',
+        message:'Oops, something went terribly wrong...',
+        data:{},
+    };
+
     //Build query from payload
     const search = searchString ? {
         OR: [
@@ -91,6 +89,7 @@ async function listHandler(request: Hapi.Request, hapi: Hapi.ResponseToolkit) {
     } : {}
 
     try {
+        //Ask the sage
         const favoureds = await prisma.favoured.findMany({
             where: {
                 ...search,
@@ -105,7 +104,8 @@ async function listHandler(request: Hapi.Request, hapi: Hapi.ResponseToolkit) {
         return hapi.response(favoureds).code(200)
 
     } catch (err) {
-        return hapi.response( { error: err } ).code(500);
+        console.log(err);
+        return hapi.response(res).code(500);
     }
 }  
 
@@ -114,13 +114,32 @@ async function createHandler(request: Hapi.Request, hapi: Hapi.ResponseToolkit) 
     const { prisma } = request.server.app;
     const payload    = request.payload as any;
 
+    //Default response
+    let res={
+        status:'error',
+        message:'Warning! Favoured compromised!',
+        data:{},
+    };
+
     try {
+        //Feed the favoured to the bank, prisma hungry
         const createdFavoured = await prisma.favoured.create({
             data: payload,
         })
-        return hapi.response(createdFavoured).code(201);
+
+        //If it worked
+        if (createdFavoured!=null){
+            res={
+                status:'success',
+                message:'Favoured has been accepted!',
+                data:createdFavoured,
+            }
+        }
+
+        return hapi.response(res).code(201);
     } catch (err) {
-        return hapi.response( { error: err } ).code(500);
+        console.log(err);
+        return hapi.response(res).code(500);
     }
 }
 
@@ -131,22 +150,43 @@ async function updateHandler(request: Hapi.Request, hapi: Hapi.ResponseToolkit) 
     const favouredId = Number(request.params.favouredId)
     const payload    = request.payload as any;
 
+    //Default response
+    let res={
+        status:'error',
+        message:'Warning! Update action compromised!',
+        data:{},
+    };
+
     try {
+        //Does favoured exist?
         const checkFavoured = await prisma.favoured.findFirst({
             where: { id: favouredId}
         })
-        
-        //Valid favoured can only have e-mail altered
-        if (checkFavoured!=null && checkFavoured.status=='valid' && ( Object.keys(payload).length>1 || ( Object.keys(payload).length==1 && payload.email==null) ) )
-            return hapi.response( { error : 'Favorecido validado pode ter somente o e-mail alterado' } ).code(403);
 
+        //Valid favoured can only have e-mail altered
+        if (checkFavoured!=null && checkFavoured.status=='valid' && ( Object.keys(payload).length>1 || ( Object.keys(payload).length==1 && payload.email==null) ) ){
+            return hapi.response( res ).code(402);
+        }
+
+        //Let prisma do the update trick
         const favoured = await prisma.favoured.update({
             where: { id: favouredId },
             data: payload,
         })
-        return hapi.response(favoured).code(201);
+
+        //Success response!
+        if (favoured!=null){
+            res={
+                status:'success',
+                message:'Sweet! Favoured updated!',
+                data:favoured,
+            };
+        }
+
+        return hapi.response(res).code(201);
     } catch (err) {
-        return hapi.response( { error: err } ).code(500);
+        console.log(err);
+        return hapi.response(res).code(500);
     }
 }
 
@@ -157,13 +197,31 @@ async function deleteManyHandler(request: Hapi.Request, hapi: Hapi.ResponseToolk
     
     const arrayIds = String(favouredIds).split(",").map( Number );
 
+    //Default response
+    let res={
+        status:'error',
+        message:'Warning! Favoured compromised!',
+        data:{},
+    };
+
     try {
+        //Prisma, put them to rest
         const favouredDeleted = await prisma.favoured.deleteMany({
             where: { id: { in: arrayIds } },
         })
-        return hapi.response(favouredDeleted || undefined).code(201)
+
+        //Did the deed, show the stick
+        if (favouredDeleted!=null){
+            res={
+                status:'success',
+                message: favouredDeleted.count+" favoureds were eliminated successfully",
+                data:favouredDeleted
+            }
+        }
+
+        return hapi.response(res).code(201)
     } catch (err) {
         console.log(err);
-        return hapi.response( { error: "Something went wrong x.x" } ).code(500);
+        return hapi.response(res).code(500);
     }
 }
