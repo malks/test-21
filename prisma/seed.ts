@@ -211,7 +211,7 @@ const favouredData: Prisma.FavouredCreateInput[] = [
     {
         name: 'Renarin Kholin',
         email: 'renarin@kholins.com',
-        cpf: '402.392.880-17',
+        cpf: '704.791.500-10',
         status: 'draft',
         account_bank: '104',
         account_agency: '6912',
