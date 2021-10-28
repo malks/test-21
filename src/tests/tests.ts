@@ -295,13 +295,13 @@ describe('Testing', () => {
         expect(res.result).to.be.an.array().and.length(5);
     });
 
-    it('Favoured List CPF 7777777777', async () => {
+    it('Favoured List CPF 777.777.777-77', async () => {
         const res = await server.inject({
             method: 'POST',
-            url: '/favoureds/list?searchString=7777777777&take=1',
+            url: '/favoureds/list?searchString=777.777.777-77&take=1',
         });
 
-        expect(res.result).to.be.an.array().and.length(1).and.to.part.contain( [ { cpf:'7777777777' } ] );
+        expect(res.result).to.be.an.array().and.length(1).and.to.part.contain( [ { cpf:'777.777.777-77' } ] );
     });
 
     it('Favoured List Order Desc', async () => {
