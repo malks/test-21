@@ -5,7 +5,6 @@ const createValidator =  joi.object({
     email:                  joi.string().email(),
     name:                   joi.string().min(3).pattern(/^[A-Za-z\W]+$/),
     cpf:                    joi.string().pattern(/(^\d{3}\.\d{3}\.\d{3}\-\d{2}$)|(^\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}$)/),
-    status:                 joi.string().pattern(/^(draft)$/),
     account_bank:           joi.string().alphanum().required(),
     account_agency:         joi.string().max(4).pattern(/^(?:^0*)[1-9][0-9]{0,3}$/).required(),
     account_agency_digit:   joi.alternatives().

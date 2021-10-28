@@ -58,7 +58,6 @@ describe('Testing', () => {
             payload: { 
                 id: 31, 
                 name: 'lala lalala', 
-                status: 'draft',
                 cpf: '703.186.360-00', 
                 email: 'lala@lalatest.test.co', 
                 account_bank: '001',
@@ -84,7 +83,7 @@ describe('Testing', () => {
         const res = await server.inject({
             method: 'POST',
             url: '/favoureds/create',
-            payload: { id:16, name: 'lala', email: 'lala@lalatest.test.co', status: 'draft', account_number:'lalala' }
+            payload: { id:16, name: 'lala', email: 'lala@lalatest.test.co',  account_number:'lalala' }
         });
 
         const whatever = await server.inject({
@@ -102,7 +101,7 @@ describe('Testing', () => {
         const res = await server.inject({
             method: 'POST',
             url: '/favoureds/create',
-            payload: { id:16, name: 'lala abc', cpf:'452.273.330-50' , email: 'lala@lalatest.tst.co', status: 'draft', account_type:'checking', account_agency:'0198', account_agency_digit:'x', account_bank:'001', account_number:'1234', account_number_digit:'x' }
+            payload: { id:16, name: 'lala abc', cpf:'452.273.330-50' , email: 'lala@lalatest.tst.co',  account_type:'checking', account_agency:'0198', account_agency_digit:'x', account_bank:'001', account_number:'1234', account_number_digit:'x' }
         });
 
         const whatever = await server.inject({
@@ -119,7 +118,7 @@ describe('Testing', () => {
         const res = await server.inject({
             method: 'POST',
             url: '/favoureds/create',
-            payload: { id:16, name: 'lala abc', cpf:'452.273.330-50' , email: 'lala@lalatest.tst.co', status: 'draft', account_type:'checking', account_agency:'0198', account_agency_digit:'x', account_bank:'237', account_number:'1234', account_number_digit:'x' }
+            payload: { id:16, name: 'lala abc', cpf:'452.273.330-50' , email: 'lala@lalatest.tst.co', account_type:'checking', account_agency:'0198', account_agency_digit:'x', account_bank:'237', account_number:'1234', account_number_digit:'x' }
         });
 
         const whatever = await server.inject({
@@ -142,7 +141,6 @@ describe('Testing', () => {
             payload: { 
                 id: 10, 
                 name: 'lala lalala', 
-                status: 'draft',
                 cpf: '703.186.360-00', 
                 email: 'lala@lalatest.test.co', 
                 account_bank: '001',
@@ -174,7 +172,7 @@ describe('Testing', () => {
         const mock = await server.inject({
             method: 'POST',
             url: '/favoureds/create',
-            payload: { id:16, name: 'lala', cpf: '12312312312', email: 'lala@lalatest.test', status: 'draft' }
+            payload: { id:16, name: 'lala', cpf: '12312312312', email: 'lala@lalatest.test' }
         });
 
         const res = await server.inject({
@@ -198,7 +196,7 @@ describe('Testing', () => {
         const mock = await server.inject({
             method: 'POST',
             url: '/favoureds/create',
-            payload: { id:16, name: 'lala', email: 'lala@lalatest.test.co', status: 'draft' }
+            payload: { id:16, name: 'lala', email: 'lala@lalatest.test.co' }
         });
 
         const res = await server.inject({
@@ -233,7 +231,7 @@ describe('Testing', () => {
 
 
         expect(res.statusCode).to.equal(201);
-        expect(res.result).be.object().and.part.contain( { data: { id:1, status: 'valid', name: 'Alice', email: 'xxx@xxx.xxx.xx' } } );
+        expect(res.result).be.object().and.part.contain( { data: { id:1, name: 'Alice', email: 'xxx@xxx.xxx.xx' } } );
         
     });
 
@@ -322,7 +320,7 @@ describe('Testing', () => {
         const create = await server.inject({
             method: 'POST',
             url: '/favoureds/create',
-            payload: { id:16, name: 'lala abc', cpf:'452.273.330-50' , email: 'lala@lalatest.tst.co', status: 'draft', account_type:'checking', account_agency:'0198', account_agency_digit:'1', account_bank:'237', account_number:'1234', account_number_digit:'1' }
+            payload: { id:16, name: 'lala abc', cpf:'452.273.330-50' , email: 'lala@lalatest.tst.co',  account_type:'checking', account_agency:'0198', account_agency_digit:'1', account_bank:'237', account_number:'1234', account_number_digit:'1' }
         });
 
         //Check favoured on the database
