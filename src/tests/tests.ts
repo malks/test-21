@@ -13,6 +13,7 @@ describe('Testing', () => {
 
     //#######Banks List Testing#########
 
+    //List All Banks
     it('Bank List All', async () => {
         const res = await server.inject({
             method: 'POST',
@@ -23,6 +24,7 @@ describe('Testing', () => {
         expect(res.result).to.be.array().and.to.length(4);
     });
 
+    //List Banco do Brasil Only
     it('Bank List BB', async () => {
         const res = await server.inject({
             method: 'POST',
@@ -36,6 +38,8 @@ describe('Testing', () => {
 
 
     //########Favoured CREATE Tests#######
+
+    //Forbidden favoured creation
     it('Favoured Create Status 400', async () => {
         const res = await server.inject({
             method: 'POST',
@@ -46,6 +50,7 @@ describe('Testing', () => {
         expect(res.statusCode).to.equal(400);
     });
 
+    //Favoured creation
     it('Favoured Create Status 201', async () => {
         const res = await server.inject({
             method: 'POST',
@@ -74,6 +79,7 @@ describe('Testing', () => {
 
     });
 
+    //Wrong Favoured Account Caught on Validation
     it('Favoured Create Account Wrong', async () => {
         const res = await server.inject({
             method: 'POST',
@@ -91,6 +97,7 @@ describe('Testing', () => {
     });
 
 
+    //Favoured BB Account created
     it('Favoured Create Account BB 201', async () => {
         const res = await server.inject({
             method: 'POST',
@@ -107,6 +114,7 @@ describe('Testing', () => {
         expect(res.statusCode).to.equal(201);
     });
 
+    //Favoured Not BB Account Creation Forbidden by Validation (digit x)
     it('Favoured Create Account NOT BB 400', async () => {
         const res = await server.inject({
             method: 'POST',
@@ -125,6 +133,8 @@ describe('Testing', () => {
 
 
     //########Favoured UPDATE Tests#######
+
+    //Update Favoured
     it('Favoured Update Status 201', async () => {
         const mock = await server.inject({
             method: 'POST',
@@ -159,11 +169,12 @@ describe('Testing', () => {
         expect(res.result).to.be.object().and.to.part.contain( { data : { name: 'Zzzzz zaza', cpf: '870.180.390-53', email: 'lala@lalatest.test.tst' } } );
     });
 
+    //Update favoured Forbidden
     it('Favoured Update Status 400', async () => {
         const mock = await server.inject({
             method: 'POST',
             url: '/favoureds/create',
-            payload: { id:16, name: 'lala', cpf: '12312312312', email: 'lala@lalatest.test', status: 'valid' }
+            payload: { id:16, name: 'lala', cpf: '12312312312', email: 'lala@lalatest.test', status: 'draft' }
         });
 
         const res = await server.inject({
@@ -182,6 +193,7 @@ describe('Testing', () => {
     });
 
 
+    //Update Favoured Account, but wrong value, caught by validator
     it('Favoured Update Account Wrong', async () => {
         const mock = await server.inject({
             method: 'POST',
@@ -205,48 +217,23 @@ describe('Testing', () => {
     });
 
     
-    it('Favoured VALID Update Status 201', async () => {
-        const mock = await server.inject({
-            method: 'POST',
-            url: '/favoureds/create',
-            payload: { 
-                id: 10, 
-                name: 'lala lalala', 
-                status: 'valid',
-                cpf: '703.186.360-00', 
-                email: 'lala@lalatest.test.co', 
-                account_bank: '001',
-                account_agency: '1234', 
-                account_number: '12345678', 
-                account_number_digit: 'x', 
-                account_type: 'easy', 
-             }
-        });
-        
+    //Valid Favoured update email
+    it('Favoured VALID Update Status 201', async () => {        
         const res = await server.inject({
             method: 'POST',
-            url: '/favoureds/update/10',
+            url: '/favoureds/update/1',
             payload: {  email: 'xxx@xxx.xxx.xx' }
         });
 
         const whatever = await server.inject({
             method: 'POST',
-            url: '/favoureds/delete',
-            payload: { favouredIds: '10' },
+            url: '/favoureds/update/1',
+            payload: { email: 'alice@test.tst' },
         });
 
 
-        expect(mock.result).be.object().and.part.contain( {
-            data: { 
-                id: 10, 
-                name: 'lala lalala', 
-                status: 'valid',
-                cpf: '703.186.360-00', 
-                email: 'lala@lalatest.test.co', 
-            } 
-        } );
         expect(res.statusCode).to.equal(201);
-        expect(res.result).be.object().and.part.contain( { data: { id:10, status: 'valid', name: 'lala lalala', email: 'xxx@xxx.xxx.xx' } } );
+        expect(res.result).be.object().and.part.contain( { data: { id:1, status: 'valid', name: 'Alice', email: 'xxx@xxx.xxx.xx' } } );
         
     });
 
@@ -348,14 +335,14 @@ describe('Testing', () => {
         const update = await server.inject({
             method: 'POST',
             url: '/favoureds/update/16',
-            payload: { name: 'Zzzzz zaza', cpf: '870.180.390-53', email: 'lala@lalatest.test.tst', status:'valid' }
+            payload: { name: 'Zzzzz zaza', cpf: '870.180.390-53', email: 'lala@lalatest.test.tst' }
         });
 
-        //Update it again, this time it goes boom
+        //Update it again, this time it crashes, status can't be updated to valid
         const again = await server.inject({
             method: 'POST',
             url: '/favoureds/update/16',
-            payload: { name: 'vvvvvvvv', email: 'again@change.it.co' }
+            payload: { name: 'vvvvvvvv', email: 'again@change.it.co', status: 'valid' }
         });
 
         //Erase it
@@ -380,11 +367,10 @@ describe('Testing', () => {
 
         //Update favoured
         expect(update.statusCode).to.equal(201);
-        expect(update.result).to.be.an.object().and.to.part.contain( { data : { name: 'Zzzzz zaza', cpf: '870.180.390-53', email: 'lala@lalatest.test.tst', status:'valid', account_type:'checking', account_agency:'0198' } } );
+        expect(update.result).to.be.an.object().and.to.part.contain( { data : { name: 'Zzzzz zaza', cpf: '870.180.390-53', email: 'lala@lalatest.test.tst', status:'draft', account_type:'checking', account_agency:'0198' } } );
 
-        //Update it again, this time it goes boom
-        expect(again.statusCode).to.equal(402);
-        expect(again.result).to.be.an.object().and.to.part.contain( { status : 'error' } );
+        //Update it again, this time it crashes, status can't be updated to valid
+        expect(again.statusCode).to.equal(400);
 
         //Erase it
         expect(erase.statusCode).to.equal(201);

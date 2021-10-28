@@ -1,7 +1,7 @@
 import Hapi from '@hapi/hapi'
 import joi from 'joi';
-import { changeValidator, createValidator } from './validators/mutation';
-import queryValidator from './validators/query';
+import createValidator from './validators/favoured-create';
+import updateValidator from './validators/favoured-update';
 
 // plugin to instantiate Favoureds
 const favouredsPlugin = {
@@ -24,9 +24,6 @@ const favouredsPlugin = {
                     validate: {
                         payload: createValidator,
                     },
-                    response:{
-                        failAction: 'error'
-                    },
                 },
             },
         ]),
@@ -37,10 +34,10 @@ const favouredsPlugin = {
                 handler: updateHandler,
                 options: {
                     validate: {
-                        payload: changeValidator
+                        payload: updateValidator
                     },
                     response:{
-                        failAction: 'log'
+                        failAction: 'error'
                     },
                 }
             },

@@ -1,5 +1,4 @@
 import Hapi from '@hapi/hapi'
-import { queryBankValidator as queryValidator } from './validators/query';
 
 // plugin to instantiate Banks
 const banksPlugin = {
@@ -11,11 +10,6 @@ const banksPlugin = {
                 method: 'POST',
                 path: '/banks/list',
                 handler: listHandler,
-                options: {
-                    validate: {
-                        query: queryValidator
-                    }
-                }
             },
         ])
     }
@@ -45,6 +39,7 @@ async function listHandler(request: Hapi.Request, hapi: Hapi.ResponseToolkit) {
     } : {}
 
     try {
+        //Get the banks
         const banks = await prisma.bank.findMany({
             where: {
                 ...search,
