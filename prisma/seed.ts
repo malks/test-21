@@ -259,7 +259,7 @@ const favouredData: Prisma.FavouredCreateInput[] = [
     {
         name: 'Joe Rogan',
         email: 'joe@rogan.com',
-        cpf: '033.621.860-50',
+        cpf: '068.044.310-06',
         status: 'valid',
         account_bank: '001',
         account_agency: '362',
