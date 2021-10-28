@@ -56,7 +56,7 @@ describe('Testing', () => {
             method: 'POST',
             url: '/favoureds/create',
             payload: { 
-                id: 10, 
+                id: 31, 
                 name: 'lala lalala', 
                 status: 'draft',
                 cpf: '703.186.360-00', 
@@ -72,7 +72,7 @@ describe('Testing', () => {
         const whatever = await server.inject({
             method: 'POST',
             url: '/favoureds/delete',
-            payload: { favouredIds: '10' }
+            payload: { favouredIds: '31' }
         });
 
         expect(res.statusCode).to.equal(201);
