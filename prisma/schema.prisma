@@ -26,10 +26,10 @@ model Favoured {
     status                  FavouredStatus  @default(draft)
     account_bank            String?
     account_agency          String?
-    account_agency_digit    String?         @db.VarChar(1)
+    account_agency_digit    String?         @db.VarChar(2)
     account_type            AccountType?
     account_number          String?
-    account_number_digit    String?         @db.VarChar(1)
+    account_number_digit    String?         @db.VarChar(2)
 }
 
 model Bank {
