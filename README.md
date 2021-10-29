@@ -29,12 +29,12 @@ Let's get to it!
 All set!
 
 ----------
-<h4>Testing</h4>
+-<h4>Testing</h4>
 
     >npm run test
 
 ----------
-<h4>Starting the server</h4>
+-<h4>Starting the server</h4>
 
     >npm run dev
 
