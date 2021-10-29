@@ -42,7 +42,17 @@ The server will run on <b>localhost:3000</b>
 
 Examples:
 
-        payload: { 
+    Routes:
+        POST: '/favoureds/list',
+        POST: '/favoureds/create',
+        POST: '/favoureds/update/{favouredId}',
+        POST: '/favoureds/delete',
+        POST: '/banks/list',
+
+
+    Create/Update Favoured Payload:
+
+        { 
             id: 99, 
             name: 'lala lalala', 
             cpf: '703.186.360-00', 
@@ -53,6 +63,9 @@ Examples:
             account_number_digit: 'x', 
             account_type: 'CONTA_FACIL', 
         }
+
+    Delete Payload: 
+        favouredIds: 1,2,3...
 
 
 <b>Thank you!</b>
