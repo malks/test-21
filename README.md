@@ -65,7 +65,7 @@ Examples:
             account_type: 'CONTA_FACIL', 
         }
 
-    Delete Payload:
+    Delete Favoured Payload:
 
         favouredIds: 1,2,3...
         
