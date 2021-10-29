@@ -7,7 +7,8 @@
     "types": "index.d.ts",
     "scripts": {
         "dev": "ts-node src/index.ts",
-        "test": "lab -I 'NOT_PRISMA_DATA_PROXY,Symbol(__RESOLVED_TEMP_DIRECTORY__)' --sourcemaps --transform node_modules/lab-transform-typescript -v src/tests/tests.ts"
+        "test": "lab -I 'NOT_PRISMA_DATA_PROXY,Symbol(__RESOLVED_TEMP_DIRECTORY__)' --sourcemaps --transform node_modules/lab-transform-typescript -v src/tests/tests.ts",
+        "db-up": "npx prisma migrate dev --name init; npx  prisma db seed;"
     },
     "dependencies": {
         "@hapi/hapi": "20.2.1",
