@@ -40,7 +40,7 @@ All set!
 
 The server will run on <b>localhost:3000</b>
 
-Examples:
+Usage Examples:
 
     Routes:
 
@@ -68,6 +68,16 @@ Examples:
     Delete Favoured Payload:
 
         favouredIds: 1,2,3...
+
+    List Favoured Query Options:
+        searchString: String to search for
+        skip: Skips x results
+        take: Take x  Results
+        orderDirection: Order by id, desc or asc
+
+        Ex: 
+        POST: '/favoureds/list?searchString=Alice&skip=1&take=1&orderDirection=desc',
+
         
 
 
