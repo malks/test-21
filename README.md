@@ -4,6 +4,7 @@ Hello, and welcome to malks-mytest21!
 
 Let's get to it!
 
+----------
 <h4>Installation</h4>
 
 1) Clone this repository somewhere in your system:
@@ -27,10 +28,12 @@ Let's get to it!
 
 All set!
 
+----------
 <h4>Testing</h4>
 
     >npm run test
 
+----------
 <h4>Starting the server</h4>
 
     >npm run dev
