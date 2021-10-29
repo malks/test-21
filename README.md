@@ -78,6 +78,11 @@ Usage Examples:
         Ex: 
         POST: '/favoureds/list?searchString=Alice&skip=1&take=1&orderDirection=desc',
 
+    List Banks Query Options:
+        searchString: String to search for
+
+        Ex:
+        POST: '/banks/list?searchString=brasil'
         
 
 
