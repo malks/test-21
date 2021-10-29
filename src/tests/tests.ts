@@ -56,7 +56,7 @@ describe('Testing', () => {
             method: 'POST',
             url: '/favoureds/create',
             payload: { 
-                id: 31, 
+                id: 99, 
                 name: 'lala lalala', 
                 cpf: '703.186.360-00', 
                 email: 'lala@lalatest.test.co', 
@@ -71,7 +71,7 @@ describe('Testing', () => {
         const whatever = await server.inject({
             method: 'POST',
             url: '/favoureds/delete',
-            payload: { favouredIds: '31' }
+            payload: { favouredIds: '99' }
         });
 
         expect(res.statusCode).to.equal(201);
@@ -83,13 +83,13 @@ describe('Testing', () => {
         const res = await server.inject({
             method: 'POST',
             url: '/favoureds/create',
-            payload: { id:16, name: 'lala', email: 'lala@lalatest.test.co',  account_number:'lalala' }
+            payload: { id:99, name: 'lala', email: 'lala@lalatest.test.co',  account_number:'lalala' }
         });
 
         const whatever = await server.inject({
             method: 'POST',
             url: '/favoureds/delete',
-            payload: { favouredIds: '16' },
+            payload: { favouredIds: '99' },
         });
 
         expect(res.statusCode).to.equal(400);
@@ -101,13 +101,13 @@ describe('Testing', () => {
         const res = await server.inject({
             method: 'POST',
             url: '/favoureds/create',
-            payload: { id:16, name: 'lala abc', cpf:'452.273.330-50' , email: 'lala@lalatest.tst.co',  account_type:'checking', account_agency:'0198', account_agency_digit:'x', account_bank:'001', account_number:'1234', account_number_digit:'x' }
+            payload: { id:99, name: 'lala abc', cpf:'452.273.330-50' , email: 'lala@lalatest.tst.co',  account_type:'checking', account_agency:'0198', account_agency_digit:'x', account_bank:'001', account_number:'1234', account_number_digit:'x' }
         });
 
         const whatever = await server.inject({
             method: 'POST',
             url: '/favoureds/delete',
-            payload: { favouredIds: '16' },
+            payload: { favouredIds: '99' },
         });
 
         expect(res.statusCode).to.equal(201);
@@ -118,13 +118,13 @@ describe('Testing', () => {
         const res = await server.inject({
             method: 'POST',
             url: '/favoureds/create',
-            payload: { id:16, name: 'lala abc', cpf:'452.273.330-50' , email: 'lala@lalatest.tst.co', account_type:'checking', account_agency:'0198', account_agency_digit:'x', account_bank:'237', account_number:'1234', account_number_digit:'x' }
+            payload: { id:99, name: 'lala abc', cpf:'452.273.330-50' , email: 'lala@lalatest.tst.co', account_type:'checking', account_agency:'0198', account_agency_digit:'x', account_bank:'237', account_number:'1234', account_number_digit:'x' }
         });
 
         const whatever = await server.inject({
             method: 'POST',
             url: '/favoureds/delete',
-            payload: { favouredIds: '16' },
+            payload: { favouredIds: '99' },
         });
 
         expect(res.statusCode).to.equal(400);
@@ -139,7 +139,7 @@ describe('Testing', () => {
             method: 'POST',
             url: '/favoureds/create',
             payload: { 
-                id: 10, 
+                id: 99, 
                 name: 'lala lalala', 
                 cpf: '703.186.360-00', 
                 email: 'lala@lalatest.test.co', 
@@ -153,14 +153,14 @@ describe('Testing', () => {
 
         const res = await server.inject({
             method: 'POST',
-            url: '/favoureds/update/10',
+            url: '/favoureds/update/99',
             payload: { name: 'Zzzzz zaza', cpf: '870.180.390-53', email: 'lala@lalatest.test.tst' }
         });
 
         const whatever = await server.inject({
             method: 'POST',
             url: '/favoureds/delete',
-            payload: { favouredIds: '10' },
+            payload: { favouredIds: '99' },
         });
 
         expect(res.statusCode).to.equal(201);
@@ -172,19 +172,19 @@ describe('Testing', () => {
         const mock = await server.inject({
             method: 'POST',
             url: '/favoureds/create',
-            payload: { id:16, name: 'lala', cpf: '12312312312', email: 'lala@lalatest.test' }
+            payload: { id:99, name: 'lala', cpf: '12312312312', email: 'lala@lalatest.test' }
         });
 
         const res = await server.inject({
             method: 'POST',
-            url: '/favoureds/update/16',
+            url: '/favoureds/update/99',
             payload: { name: 'Zzzzz', cpf: '45645645678', email: 'lala@lalatest.test' }
         });
 
         const whatever = await server.inject({
             method: 'POST',
             url: '/favoureds/delete',
-            payload: { favouredIds: '16' },
+            payload: { favouredIds: '99' },
         });
 
         expect(res.statusCode).to.equal(400);
@@ -242,13 +242,13 @@ describe('Testing', () => {
         const whatever = await server.inject({
             method: 'POST',
             url: '/favoureds/create',
-            payload: { id:14, name: 'Number Twelve', cpf: '12121212121', email: 'twelve@twelst.tst' }
+            payload: { id:99, name: 'Number Twelve', cpf: '12121212121', email: 'twelve@twelst.tst' }
         });
 
         const res = await server.inject({
             method: 'POST',
             url: '/favoureds/delete',
-            payload: { favouredIds: '14' },
+            payload: { favouredIds: '99' },
         });
 
         expect(res.statusCode).to.equal(201);
@@ -320,7 +320,7 @@ describe('Testing', () => {
         const create = await server.inject({
             method: 'POST',
             url: '/favoureds/create',
-            payload: { id:16, name: 'lala abc', cpf:'452.273.330-50' , email: 'lala@lalatest.tst.co',  account_type:'checking', account_agency:'0198', account_agency_digit:'1', account_bank:'237', account_number:'1234', account_number_digit:'1' }
+            payload: { id:99, name: 'lala abc', cpf:'452.273.330-50' , email: 'lala@lalatest.tst.co',  account_type:'checking', account_agency:'0198', account_agency_digit:'1', account_bank:'237', account_number:'1234', account_number_digit:'1' }
         });
 
         //Check favoured on the database
@@ -332,14 +332,14 @@ describe('Testing', () => {
         //Update favoured
         const update = await server.inject({
             method: 'POST',
-            url: '/favoureds/update/16',
+            url: '/favoureds/update/99',
             payload: { name: 'Zzzzz zaza', cpf: '870.180.390-53', email: 'lala@lalatest.test.tst' }
         });
 
         //Update it again, this time it crashes, status can't be updated to valid
         const again = await server.inject({
             method: 'POST',
-            url: '/favoureds/update/16',
+            url: '/favoureds/update/99',
             payload: { name: 'vvvvvvvv', email: 'again@change.it.co', status: 'valid' }
         });
 
@@ -347,7 +347,7 @@ describe('Testing', () => {
         const erase = await server.inject({
             method: 'POST',
             url: '/favoureds/delete',
-            payload: { favouredIds: '16' },
+            payload: { favouredIds: '99' },
         });
 
         //Make sure it's gone
