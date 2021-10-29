@@ -251,7 +251,7 @@ const favouredData: Prisma.FavouredCreateInput[] = [
         status: 'draft',
         account_bank: '756',
         account_agency: '0777',
-        account_agency_digit: '97',
+        account_agency_digit: '9',
         account_type: 'checking',
         account_number: '717',
         account_number_digit: '7',
