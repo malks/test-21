@@ -32,9 +32,9 @@ All set!
 -----
 Testing:
 -----
-    > npm run test
+    >npm run test
 
 -----
 Starting the server:
 -----
-    > npm run dev
+    >npm run dev
