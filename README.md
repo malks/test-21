@@ -31,12 +31,12 @@ All set!
 ----------
 -<h4>Testing</h4>
 
-    >npm run test
+### npm run test
 
 ----------
 -<h4>Starting the server</h4>
 
-    >npm run dev
+### npm run dev
 
 The server will run on <b>localhost:3000</b>
 
