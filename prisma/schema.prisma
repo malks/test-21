@@ -13,9 +13,9 @@ enum FavouredStatus{
 }
 
 enum AccountType{
-    savings
-    checking
-    easy
+    CONTA_CORRENTE
+    CONTA_POUPANCA
+    CONTA_FACIL
 }
 
 model Favoured {

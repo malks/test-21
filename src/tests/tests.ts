@@ -64,7 +64,7 @@ describe('Testing', () => {
                 account_agency: '1234', 
                 account_number: '12345678', 
                 account_number_digit: 'x', 
-                account_type: 'easy', 
+                account_type: 'CONTA_FACIL', 
             }
         });
 
@@ -101,7 +101,7 @@ describe('Testing', () => {
         const res = await server.inject({
             method: 'POST',
             url: '/favoureds/create',
-            payload: { id:99, name: 'lala abc', cpf:'452.273.330-50' , email: 'lala@lalatest.tst.co',  account_type:'checking', account_agency:'0198', account_agency_digit:'x', account_bank:'001', account_number:'1234', account_number_digit:'x' }
+            payload: { id:99, name: 'lala abc', cpf:'452.273.330-50' , email: 'lala@lalatest.tst.co',  account_type:'CONTA_CORRENTE', account_agency:'0198', account_agency_digit:'x', account_bank:'001', account_number:'1234', account_number_digit:'x' }
         });
 
         const whatever = await server.inject({
@@ -118,7 +118,7 @@ describe('Testing', () => {
         const res = await server.inject({
             method: 'POST',
             url: '/favoureds/create',
-            payload: { id:99, name: 'lala abc', cpf:'452.273.330-50' , email: 'lala@lalatest.tst.co', account_type:'checking', account_agency:'0198', account_agency_digit:'x', account_bank:'237', account_number:'1234', account_number_digit:'x' }
+            payload: { id:99, name: 'lala abc', cpf:'452.273.330-50' , email: 'lala@lalatest.tst.co', account_type:'CONTA_CORRENTE', account_agency:'0198', account_agency_digit:'x', account_bank:'237', account_number:'1234', account_number_digit:'x' }
         });
 
         const whatever = await server.inject({
@@ -147,7 +147,7 @@ describe('Testing', () => {
                 account_agency: '1234', 
                 account_number: '12345678', 
                 account_number_digit: 'x', 
-                account_type: 'easy', 
+                account_type: 'CONTA_FACIL', 
              }
         });
 
@@ -320,7 +320,7 @@ describe('Testing', () => {
         const create = await server.inject({
             method: 'POST',
             url: '/favoureds/create',
-            payload: { id:99, name: 'lala abc', cpf:'452.273.330-50' , email: 'lala@lalatest.tst.co',  account_type:'checking', account_agency:'0198', account_agency_digit:'1', account_bank:'237', account_number:'1234', account_number_digit:'1' }
+            payload: { id:99, name: 'lala abc', cpf:'452.273.330-50' , email: 'lala@lalatest.tst.co',  account_type:'CONTA_CORRENTE', account_agency:'0198', account_agency_digit:'1', account_bank:'237', account_number:'1234', account_number_digit:'1' }
         });
 
         //Check favoured on the database
@@ -365,7 +365,7 @@ describe('Testing', () => {
 
         //Update favoured
         expect(update.statusCode).to.equal(201);
-        expect(update.result).to.be.an.object().and.to.part.contain( { data : { name: 'Zzzzz zaza', cpf: '870.180.390-53', email: 'lala@lalatest.test.tst', status:'draft', account_type:'checking', account_agency:'0198' } } );
+        expect(update.result).to.be.an.object().and.to.part.contain( { data : { name: 'Zzzzz zaza', cpf: '870.180.390-53', email: 'lala@lalatest.test.tst', status:'draft', account_type:'CONTA_CORRENTE', account_agency:'0198' } } );
 
         //Update it again, this time it crashes, status can't be updated to valid
         expect(again.statusCode).to.equal(400);

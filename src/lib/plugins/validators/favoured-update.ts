@@ -21,8 +21,8 @@ const updateValidator =  joi.object({
                                     joi.ref('account_bank'), 
                                     { 
                                         is: '001', 
-                                        then:       joi.string().pattern(/^(savings|checking|easy)$/),
-                                        otherwise:  joi.string().pattern(/^(savings|checking)$/),
+                                        then:       joi.string().pattern(/^(CONTA_POUPANCA|CONTA_CORRENTE|CONTA_FACIL)$/),
+                                        otherwise:  joi.string().pattern(/^(CONTA_POUPANCA|CONTA_CORRENTE)$/),
                                     },
                                 ),
     account_number:         joi.alternatives().
