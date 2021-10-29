@@ -17,8 +17,10 @@ Installation
         >cd test;
         >npm install
 
-3) Configure the .env file inside the repo with your database parameters, it cannot be SQLite, since we use ENUM on the database =)
+3) Configure the .env file inside the repo folder with your database parameters, it cannot be SQLite, since we use ENUM on the database =) this has been tested with MySQL.
+
         It should look like this:
+
             >DATABASE_URL="mysql://USER:PASS@HOST:PORT/DATABASE"
 
 4) Run Db-up. <b>This will affect your database, so make sure the .env file is pointing you to a new, empty, or otherwise unimportant database</b>
