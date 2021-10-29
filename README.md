@@ -32,13 +32,13 @@ All set!
 -----
 Testing
 
-    >npm run test;
+    >>npm run test;
 
 -----
 Starting the server
 
-    >npm run dev;
+    >>npm run dev;
 
-The server will run on localhost:3000
+The server will run on <b>localhost:3000</b>
 
 Thank you!
