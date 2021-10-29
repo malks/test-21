@@ -9,9 +9,11 @@ Installation
 -----
 
 1) Clone this repository somewhere in your system:
+
         >git clone https://github.com/malks/test-21.git test
 
 2) Run NPM Install inside the repo folder:
+
         >cd test;
         >npm install
 
