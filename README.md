@@ -12,9 +12,9 @@ Let's get to it!
 
 2) Run NPM Install inside the repo folder:
 
-    >cd test;
+    >cd test
 
-    >npm install;
+    >npm install
 
 3) Configure the .env file inside the repo folder with your database parameters, it cannot be SQLite, since we use ENUM on the database =) this has been tested with MySQL.
 
