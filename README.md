@@ -30,9 +30,11 @@ Installation
 All set!
 
 -----
-Testing:
+Testing
+
     > npm run test
 
 -----
-Starting the server:
+Starting the server
+
     > npm run dev
