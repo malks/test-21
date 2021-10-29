@@ -38,3 +38,7 @@ Testing
 Starting the server
 
     >npm run dev;
+
+The server will run on localhost:3000
+
+Thank you!
