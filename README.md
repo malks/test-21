@@ -43,6 +43,7 @@ The server will run on <b>localhost:3000</b>
 Examples:
 
     Routes:
+
         POST: '/favoureds/list',
         POST: '/favoureds/create',
         POST: '/favoureds/update/{favouredId}',
@@ -64,8 +65,10 @@ Examples:
             account_type: 'CONTA_FACIL', 
         }
 
-    Delete Payload: 
+    Delete Payload:
+
         favouredIds: 1,2,3...
+        
 
 
 <b>Thank you!</b>
