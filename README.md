@@ -42,17 +42,17 @@ The server will run on <b>localhost:3000</b>
 
 Examples:
 
-    >    payload: { <br>
-    >        id: 99, <br>
-    >        name: 'lala lalala', <br>
-    >        cpf: '703.186.360-00', <br>
-    >        email: 'lala@lalatest.test.co', <br>
-    >        account_bank: '001',<br>
-    >        account_agency: '1234', <br>
-    >        account_number: '12345678', <br>
-    >        account_number_digit: 'x', <br>
-    >        account_type: 'CONTA_FACIL', <br>
-    >    }<br>
+        payload: { 
+            id: 99, 
+            name: 'lala lalala', 
+            cpf: '703.186.360-00', 
+            email: 'lala@lalatest.test.co', 
+            account_bank: '001',
+            account_agency: '1234', 
+            account_number: '12345678', 
+            account_number_digit: 'x', 
+            account_type: 'CONTA_FACIL', 
+        }
 
 
 <b>Thank you!</b>
