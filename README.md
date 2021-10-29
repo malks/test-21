@@ -1,12 +1,10 @@
-<h4>Malks Mytest-21</h4>
+<h2>Malks Mytest-21</h2>
 
 Hello, and welcome to malks-mytest21!
 
 Let's get to it!
 
------
-Installation
------
+<h4>Installation</h4>
 
 1) Clone this repository somewhere in your system:
     >git clone https://github.com/malks/test-21.git test
@@ -29,16 +27,14 @@ Installation
 
 All set!
 
------
-Testing
+<h4>Testing</h4>
 
     >npm run test
 
------
-Starting the server
+<h4>Starting the server</h4>
 
     >npm run dev
 
 The server will run on <b>localhost:3000</b>
 
-Thank you!
+<b>Thank you!</b>
