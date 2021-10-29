@@ -23,7 +23,8 @@ It should look like this:
 
     >DATABASE_URL="mysql://USER:PASS@HOST:PORT/DATABASE"
 
-4) Run Db-up. <b>This will affect your database, so make sure the .env file is pointing you to a new, empty, or otherwise unimportant database</b>
+4) Run Db-up. 
+    <b>IMPORTANT:</b> This will affect your database, so make sure the .env file is pointing you to a new, empty, or otherwise unimportant database<
     >npm run db-up
 
 All set!
