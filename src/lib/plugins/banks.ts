@@ -1,24 +1,7 @@
 import Hapi from '@hapi/hapi'
 
-// plugin to instantiate Banks
-const banksPlugin = {
-    name: 'app/banks',
-    dependencies: ['prisma'],
-    register: async function (server: Hapi.Server) {
-        server.route([
-            {
-                method: 'POST',
-                path: '/banks/list',
-                handler: listHandler,
-            },
-        ])
-    }
-}
-
-export default banksPlugin;
-
 //Handle Banks list
-async function listHandler(request: Hapi.Request, hapi: Hapi.ResponseToolkit) {
+export async function listHandler(request: Hapi.Request, hapi: Hapi.ResponseToolkit) {
     const { prisma } = request.server.app
 
     const { searchString } = request.query
@@ -52,4 +35,4 @@ async function listHandler(request: Hapi.Request, hapi: Hapi.ResponseToolkit) {
         console.log(err);
         return hapi.response( res ).code(500);
     }
-}  
+}

@@ -1,7 +1,7 @@
 import Hapi from '@hapi/hapi'
 import prisma from './plugins/prisma'
-import favoureds from './plugins/favoureds'
-import banks from './plugins/banks'
+import { favouredsPlugin as favoureds } from './routes'
+import { banksPlugin as banks } from './routes'
 
 //Instantiate server
 export const server: Hapi.Server = Hapi.server({

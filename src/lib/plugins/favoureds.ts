@@ -1,81 +1,16 @@
 import Hapi from '@hapi/hapi'
-import joi from 'joi';
-import createValidator from './validators/favoured-create';
-import updateValidator from './validators/favoured-update';
 
-// plugin to instantiate Favoureds
-const favouredsPlugin = {
-    name: 'app/favoureds',
-    dependencies: ['prisma'],
-    register: async function (server: Hapi.Server) {
-        server.route([
-            {
-                method: 'POST',
-                path: '/favoureds/list',
-                handler: listHandler,
-            },
-        ]),
-        server.route([
-            {
-                method: 'POST',
-                path: '/favoureds/create',
-                handler: createHandler,
-                options: {
-                    validate: {
-                        payload: createValidator,
-                    },
-                },
-            },
-        ]),
-        server.route([
-            {
-                method: 'POST',
-                path: '/favoureds/update/{favouredId}',
-                handler: updateHandler,
-                options: {
-                    validate: {
-                        payload: updateValidator
-                    },
-                    response:{
-                        failAction: 'error'
-                    },
-                }
-            },
-        ]),
-        server.route([
-            {
-                method: 'POST',
-                path: '/favoureds/delete',
-                handler: deleteManyHandler,
-                options: {
-                    validate: {
-                        payload: joi.object({ favouredIds: joi.string().required() })
-                    },
-                    response:{
-                        failAction: 'error'
-                    },
-                }
-            },
-        ])
-    }
-}
-
-export default favouredsPlugin;
-
-//Handle Favoureds list
-async function listHandler(request: Hapi.Request, hapi: Hapi.ResponseToolkit) {
+export async function listHandler(request: Hapi.Request, hapi: Hapi.ResponseToolkit) {
     const { prisma } = request.server.app
 
     const { searchString, skip, take, orderDirection } = request.query
 
-    //Default response
     let res={
         status:'error',
         message:'Oops, something went terribly wrong...',
         data:{},
     };
 
-    //Build query from payload
     const search = searchString ? {
         OR: [
             { name: { contains: searchString } },
@@ -86,7 +21,6 @@ async function listHandler(request: Hapi.Request, hapi: Hapi.ResponseToolkit) {
     } : {}
 
     try {
-        //Ask the sage
         const favoureds = await prisma.favoured.findMany({
             where: {
                 ...search,
@@ -106,12 +40,10 @@ async function listHandler(request: Hapi.Request, hapi: Hapi.ResponseToolkit) {
     }
 }  
 
-//Handle Favoured creation
-async function createHandler(request: Hapi.Request, hapi: Hapi.ResponseToolkit) {
+export async function createHandler(request: Hapi.Request, hapi: Hapi.ResponseToolkit) {
     const { prisma } = request.server.app;
     const payload    = request.payload as any;
 
-    //Default response
     let res={
         status:'error',
         message:'Warning! Favoured compromised!',
@@ -119,12 +51,10 @@ async function createHandler(request: Hapi.Request, hapi: Hapi.ResponseToolkit) 
     };
 
     try {
-        //Feed the favoured to the bank, prisma hungry
         const createdFavoured = await prisma.favoured.create({
             data: payload,
         })
 
-        //If it worked
         if (createdFavoured!=null){
             res={
                 status:'success',
@@ -140,14 +70,12 @@ async function createHandler(request: Hapi.Request, hapi: Hapi.ResponseToolkit) 
     }
 }
 
-//Handle Favoured update
-async function updateHandler(request: Hapi.Request, hapi: Hapi.ResponseToolkit) {
+export async function updateHandler(request: Hapi.Request, hapi: Hapi.ResponseToolkit) {
     const { prisma } = request.server.app;
 
     const favouredId = Number(request.params.favouredId)
     const payload    = request.payload as any;
 
-    //Default response
     let res={
         status:'error',
         message:'Warning! Update action compromised!',
@@ -155,23 +83,19 @@ async function updateHandler(request: Hapi.Request, hapi: Hapi.ResponseToolkit) 
     };
 
     try {
-        //Does favoured exist?
         const checkFavoured = await prisma.favoured.findFirst({
             where: { id: favouredId}
         })
 
-        //Valid favoured can only have e-mail altered
         if (checkFavoured!=null && checkFavoured.status=='valid' && ( Object.keys(payload).length>1 || ( Object.keys(payload).length==1 && payload.email==null) ) ){
             return hapi.response( res ).code(402);
         }
 
-        //Let prisma do the update trick
         const favoured = await prisma.favoured.update({
             where: { id: favouredId },
             data: payload,
         })
 
-        //Success response!
         if (favoured!=null){
             res={
                 status:'success',
@@ -187,14 +111,12 @@ async function updateHandler(request: Hapi.Request, hapi: Hapi.ResponseToolkit) 
     }
 }
 
-//Handle Favoured delete
-async function deleteManyHandler(request: Hapi.Request, hapi: Hapi.ResponseToolkit) {
+export async function deleteManyHandler(request: Hapi.Request, hapi: Hapi.ResponseToolkit) {
     const { prisma }      = request.server.app
     const { favouredIds } = request.payload as any;
     
     const arrayIds = String(favouredIds).split(",").map( Number );
 
-    //Default response
     let res={
         status:'error',
         message:'Warning! Favoured compromised!',
@@ -202,12 +124,10 @@ async function deleteManyHandler(request: Hapi.Request, hapi: Hapi.ResponseToolk
     };
 
     try {
-        //Prisma, put them to rest
         const favouredDeleted = await prisma.favoured.deleteMany({
             where: { id: { in: arrayIds } },
         })
 
-        //Did the deed, show the stick
         if (favouredDeleted!=null){
             res={
                 status:'success',
