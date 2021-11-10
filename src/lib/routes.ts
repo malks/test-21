@@ -1,11 +1,12 @@
 import Hapi from '@hapi/hapi'
+import joi from 'joi';
+
 import { listHandler as listBank } from './plugins/banks'
 import { listHandler as listFavoured } from './plugins/favoureds'
 import { createHandler as createFavoured } from './plugins/favoureds'
 import { updateHandler as updateFavoured } from './plugins/favoureds'
 import { deleteManyHandler as deleteManyFavoured } from './plugins/favoureds'
 
-import joi from 'joi';
 import createValidator from './plugins/validators/favoured-create';
 import updateValidator from './plugins/validators/favoured-update';
 
@@ -15,7 +16,7 @@ export const favouredsPlugin = {
     register: async function (server: Hapi.Server) {
         server.route([
             {
-                method: 'POST',
+                method: 'GET',
                 path: '/favoureds/list',
                 handler: listFavoured,
             },
@@ -34,7 +35,7 @@ export const favouredsPlugin = {
         ]),
         server.route([
             {
-                method: 'POST',
+                method: 'PUT',
                 path: '/favoureds/update/{favouredId}',
                 handler: updateFavoured,
                 options: {
@@ -49,7 +50,7 @@ export const favouredsPlugin = {
         ]),
         server.route([
             {
-                method: 'POST',
+                method: 'DELETE',
                 path: '/favoureds/delete',
                 handler: deleteManyFavoured,
                 options: {

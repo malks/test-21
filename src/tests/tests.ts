@@ -69,7 +69,7 @@ describe('Testing', () => {
         });
 
         const whatever = await server.inject({
-            method: 'POST',
+            method: 'DELETE',
             url: '/favoureds/delete',
             payload: { favouredIds: '99' }
         });
@@ -87,7 +87,7 @@ describe('Testing', () => {
         });
 
         const whatever = await server.inject({
-            method: 'POST',
+            method: 'DELETE',
             url: '/favoureds/delete',
             payload: { favouredIds: '99' },
         });
@@ -105,7 +105,7 @@ describe('Testing', () => {
         });
 
         const whatever = await server.inject({
-            method: 'POST',
+            method: 'DELETE',
             url: '/favoureds/delete',
             payload: { favouredIds: '99' },
         });
@@ -122,7 +122,7 @@ describe('Testing', () => {
         });
 
         const whatever = await server.inject({
-            method: 'POST',
+            method: 'DELETE',
             url: '/favoureds/delete',
             payload: { favouredIds: '99' },
         });
@@ -152,13 +152,13 @@ describe('Testing', () => {
         });
 
         const res = await server.inject({
-            method: 'POST',
+            method: 'PUT',
             url: '/favoureds/update/99',
             payload: { name: 'Zzzzz zaza', cpf: '870.180.390-53', email: 'lala@lalatest.test.tst' }
         });
 
         const whatever = await server.inject({
-            method: 'POST',
+            method: 'DELETE',
             url: '/favoureds/delete',
             payload: { favouredIds: '99' },
         });
@@ -176,13 +176,13 @@ describe('Testing', () => {
         });
 
         const res = await server.inject({
-            method: 'POST',
+            method: 'PUT',
             url: '/favoureds/update/99',
             payload: { name: 'Zzzzz', cpf: '45645645678', email: 'lala@lalatest.test' }
         });
 
         const whatever = await server.inject({
-            method: 'POST',
+            method: 'DELETE',
             url: '/favoureds/delete',
             payload: { favouredIds: '99' },
         });
@@ -200,13 +200,13 @@ describe('Testing', () => {
         });
 
         const res = await server.inject({
-            method: 'POST',
+            method: 'PUT',
             url: '/favoureds/update/16',
             payload: {  account_number:'lalala' }
         });
 
         const whatever = await server.inject({
-            method: 'POST',
+            method: 'DELETE',
             url: '/favoureds/delete',
             payload: { favouredIds: '16' },
         });
@@ -218,13 +218,13 @@ describe('Testing', () => {
     //Valid Favoured update email
     it('Favoured VALID Update Status 201', async () => {        
         const res = await server.inject({
-            method: 'POST',
+            method: 'PUT',
             url: '/favoureds/update/1',
             payload: {  email: 'xxx@xxx.xxx.xx' }
         });
 
         const whatever = await server.inject({
-            method: 'POST',
+            method: 'PUT',
             url: '/favoureds/update/1',
             payload: { email: 'alice@test.tst' },
         });
@@ -246,7 +246,7 @@ describe('Testing', () => {
         });
 
         const res = await server.inject({
-            method: 'POST',
+            method: 'DELETE',
             url: '/favoureds/delete',
             payload: { favouredIds: '99' },
         });
@@ -259,7 +259,7 @@ describe('Testing', () => {
     //########Favoured LIST Tests#######
     it('Favoured List Status 200', async () => {
         const res = await server.inject({
-            method: 'POST',
+            method: 'GET',
             url: '/favoureds/list'
         });
 
@@ -268,7 +268,7 @@ describe('Testing', () => {
 
     it('Favoured List Got Alice', async () => {
         const res = await server.inject({
-            method: 'POST',
+            method: 'GET',
             url: '/favoureds/list'
         });
 
@@ -277,7 +277,7 @@ describe('Testing', () => {
 
     it('Favoured List No Alice', async () => {
         const res = await server.inject({
-            method: 'POST',
+            method: 'GET',
             url: '/favoureds/list?skip=1',
         });
 
@@ -286,7 +286,7 @@ describe('Testing', () => {
 
     it('Favoured List Take 5', async () => {
         const res = await server.inject({
-            method: 'POST',
+            method: 'GET',
             url: '/favoureds/list?take=5',
         });
         
@@ -295,7 +295,7 @@ describe('Testing', () => {
 
     it('Favoured List CPF 777.777.777-77', async () => {
         const res = await server.inject({
-            method: 'POST',
+            method: 'GET',
             url: '/favoureds/list?searchString=777.777.777-77&take=1',
         });
 
@@ -304,7 +304,7 @@ describe('Testing', () => {
 
     it('Favoured List Order Desc', async () => {
         const res = await server.inject({
-            method: 'POST',
+            method: 'GET',
             url: '/favoureds/list?orderDirection=desc&take=1',
         });
         
@@ -325,34 +325,34 @@ describe('Testing', () => {
 
         //Check favoured on the database
         const list = await server.inject({
-            method: 'POST',
+            method: 'GET',
             url: '/favoureds/list?searchString=452.273.330-50&take=1',
         });
 
         //Update favoured
         const update = await server.inject({
-            method: 'POST',
+            method: 'PUT',
             url: '/favoureds/update/99',
             payload: { name: 'Zzzzz zaza', cpf: '870.180.390-53', email: 'lala@lalatest.test.tst' }
         });
 
         //Update it again, this time it crashes, status can't be updated to valid
         const again = await server.inject({
-            method: 'POST',
+            method: 'PUT',
             url: '/favoureds/update/99',
             payload: { name: 'vvvvvvvv', email: 'again@change.it.co', status: 'valid' }
         });
 
         //Erase it
         const erase = await server.inject({
-            method: 'POST',
+            method: 'DELETE',
             url: '/favoureds/delete',
             payload: { favouredIds: '99' },
         });
 
         //Make sure it's gone
         const check = await server.inject({
-            method: 'POST',
+            method: 'GET',
             url: '/favoureds/list?searchString=870.180.390-53&take=1',
         });
 
